@@ -1,2 +1,2 @@
 #!/bin/bash
-pkill -f test_leader_election
+pkill -f better_grpc_base
