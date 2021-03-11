@@ -1,6 +1,6 @@
 #!/bin/bash
 rm output.txt
-pkill -f better_grpc_base
+pkill -f leader_election
 
 go build
 
@@ -16,7 +16,7 @@ sleep 3
 for ((i=0;i<$x;i++))
 do
     echo "Initializing node ($((i+1))/$x)..."
-	./better_grpc_base $x $i >> output.txt &
+	./leader_election $x $i >> output.txt &
     sleep 1
 done
 

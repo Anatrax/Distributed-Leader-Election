@@ -1,3 +1,3 @@
-module github.com/anatrax/better_grpc_base
+module github.com/anatrax/leader_election
 
 go 1.16
