@@ -3,22 +3,34 @@ Raft Leader Election Implementation
 
 Running the Example
 --------------------
+
+> Note: Leader nodes intentionally crash after sending a few heartbeats in order to demonstrate the ability of the remaining nodes to recover by electing a new leader
+
+### With the Script
 To start the example, run the following command with the number of nodes you want in the test (Defaults to 7):
 ```bash
 $ ./start.sh <number of nodes>
 ```
 
+### Manually
 Alternatively, you can start individual nodes yourself:
 ```bash
 $ go build
-$ ./leader_election <number of nodes> <this node's ID>
+$ rm -f output.txt
+$ ./leader_election <number of nodes> <this node's ID> >> output.txt
 ```
 
-> Note: Leader nodes automatically crash after sending a few heartbeats
+If you start any nodes in the background, you can use the `stop.sh` script, which just runs `pkill -f leader_election`:
+```bash
+$ ./stop.sh
+# or
+$ pkill -f leader_election
+```
 
 Example Logs
 -------------
-Logs are stored in `output.txt`.
+Logs are stored in `output.txt`. This `start.sh` script automatically deletes the previous contents of this output file before each run.
+
 ```
 [21:48:46.4878 | ID 000 | F0 ]  Timed out waiting for heartbeat
 [21:48:46.4883 | ID 000 | C1 ]  Requesting votes
@@ -79,7 +91,7 @@ Logs are stored in `output.txt`.
 ...
 ```
 
-These can be `grep`'ed for individual node logs with the following command, where `XXX` is the ID of the node front-padded with zeros (i.e., Node 0's ID would be `000`, Node 1's ID would be `001`, etc.):
+The output file can be `grep`'ed for individual node logs with the following command, where `XXX` is the ID of the node front-padded with zeros (i.e., Node 0's ID would be `000`, Node 1's ID would be `001`, etc.):
 ```bash
 $ grep "ID XXX" output.txt
 ```
